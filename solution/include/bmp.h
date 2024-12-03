@@ -3,9 +3,9 @@
 #define BMP_SIGNATURE 0x4D42
 #define BMP_BITS      24
 
+#include "image.h"
 #include <stdint.h>
 #include <stdio.h>
-#include "image.h"
 
 struct __attribute__((packed)) bmp_header
 {
