@@ -1,8 +1,8 @@
 #include "bmp.h"
 #include "image.h"
 
-#include <stdlib.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 static enum read_status read_pixels( FILE* in, struct image* img, struct bmp_header* header ) {
   uint32_t row_size = img->width * sizeof( struct pixel );
