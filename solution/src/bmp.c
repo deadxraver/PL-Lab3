@@ -48,10 +48,10 @@ enum read_status from_bmp( FILE* in, struct image* img ) {
 
 enum write_status to_bmp( FILE* out, struct image const* img ) {
   if ( !out ) return WRITE_ERROR;
-  uint32_t padding = (4 - img->width % 4) % 4;
+  uint32_t padding = (4 - (sizeof(struct pixel) * img->width) % 4) % 4;
   struct bmp_header header = ( struct bmp_header ) {
     .bfType = BMP_SIGNATURE,
-    .bfileSize = img->height * ( img->width * sizeof( struct pixel ) + padding ) + sizeof( struct bmp_header ),
+    .bfileSize = img->height * ( img->width * sizeof( struct pixel ) ) + sizeof( struct bmp_header ),
     .bOffBits = sizeof( struct bmp_header ),
     .biSize = 40,
     .biWidth = img->width,
@@ -59,7 +59,7 @@ enum write_status to_bmp( FILE* out, struct image const* img ) {
     .biPlanes = 1,
     .biBitCount = BMP_BITS,
     .biCompression = 0,
-    .biSizeImage = img->height * (img->width + padding)
+    .biSizeImage = img->height * (img->width * sizeof(struct pixel) + padding)
   };
   if ( fwrite( &header, sizeof( struct bmp_header ), 1, out ) != 1 ) {
     fprintf( stderr, "failed to write header\n" );
@@ -75,7 +75,7 @@ enum write_status to_bmp( FILE* out, struct image const* img ) {
       }
     }
     for ( uint32_t n = 0; n < padding; n++ ) {
-        if ( fwrite( &garbage_pixel, sizeof( struct pixel ), 1, out ) != 1 ) {
+        if ( fwrite( &garbage_pixel, 1, 1, out ) != 1 ) {
         fprintf( stderr, "failed to write\n" );
         return WRITE_ERROR;
       }

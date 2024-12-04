@@ -26,6 +26,10 @@ int main( int argc, char** argv ) {
   const char* transformation = argv[3];
 
   FILE* file = fopen( source_image, "rb" );
+  if ( !file ) {
+    fprintf(stderr, "No such file\n");
+    return READ_FILE_NOT_EXISTS;
+  }
   struct image img = { .data = NULL };
   enum read_status read_stat = from_bmp( file, &img );
   fclose( file );

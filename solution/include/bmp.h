@@ -30,10 +30,10 @@ struct __attribute__((packed)) bmp_header
 enum read_status  {
   READ_OK = 0,
   READ_INVALID_SIGNATURE,
+  READ_FILE_NOT_EXISTS,
   READ_INVALID_BITS,
   READ_INVALID_HEADER,
-  READ_FILE_NOT_EXISTS,
-  READ_MALLOC_ERROR
+  READ_MALLOC_ERROR = 12
   /* коды других ошибок  */
 };
 
