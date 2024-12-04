@@ -66,7 +66,7 @@ enum write_status to_bmp( FILE* out, struct image const* img ) {
     return WRITE_ERROR;
   }
 
-  struct pixel garbage_pixel;
+  struct pixel garbage_pixel = { 0 };
   for ( size_t i = 0; i < img->height; i++ ) {
     for ( size_t j = 0; j < img->width; j++ ) {
       if ( fwrite( img->data + i * img->width + j, sizeof( struct pixel ), 1, out ) != 1 ) {

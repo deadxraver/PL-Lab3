@@ -54,7 +54,7 @@ int main( int argc, char** argv ) {
   enum write_status wr_stat = to_bmp( file, &new_image );
   free( new_image.data );
   if ( wr_stat ) {
-    fprintf(stderr, "Failed to write to destination image\n");
+    fprintf( stderr, "Failed to write to destination image\n" );
   }
   fclose( file );
   return wr_stat;
