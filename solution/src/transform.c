@@ -11,6 +11,10 @@ struct image create_new_image( uint64_t height, uint64_t width ) {
 
 static struct image rotate( struct image source, enum direction90 dir ) {
   struct image new_img = create_new_image( source.width, source.height );
+  if ( !new_img.data ) {
+    free( source.data );
+    return new_img;
+  }
   for ( size_t i = 0; i < source.height; ++i ) {
     for ( size_t j = 0; j < source.width; ++j ) {
       size_t addr = dir ? (j + 1) * new_img.width - 1 - i : (new_img.height - 1 - j) * new_img.width + i;
