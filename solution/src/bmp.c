@@ -8,7 +8,6 @@ static enum read_status read_pixels( FILE* in, struct image* img, struct bmp_hea
   uint32_t row_size = img->width * sizeof( struct pixel );
   uint32_t padding = (4 - row_size % 4) % 4;
 
-  img->data = malloc( img->width * img->height * sizeof( struct pixel ) );
   if ( !img->data ) {
     fprintf( stderr, "allocation error" );
     return READ_MALLOC_ERROR;
@@ -41,8 +40,7 @@ enum read_status from_bmp( FILE* in, struct image* img ) {
     fprintf( stderr, "Incorrect bits depth\n" );
     return READ_INVALID_BITS;
   }
-  img->width = header.biWidth;
-  img->height = header.biHeight;
+  *img = create_new_image( header.biHeight, header.biWidth );
   return read_pixels(in, img, &header );
 }
 
