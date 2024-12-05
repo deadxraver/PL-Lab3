@@ -49,7 +49,10 @@ int main( int argc, char** argv ) {
     free( img.data );
     return -1;
   }
-  
+  if ( !new_image.data ) {
+    fprintf( stderr, "failed to allocate memory for new image\n" );
+    return -1;
+  }
   file = fopen( transformed_image, "wb" );
   enum write_status wr_stat = to_bmp( file, &new_image );
   free( new_image.data );

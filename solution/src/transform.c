@@ -1,7 +1,16 @@
 #include "transform.h"
 
+struct image create_new_image( uint64_t height, uint64_t width ) {
+  struct image new_img = ( struct image ) { 
+    .height = height,
+    .width = width,
+    .data = malloc( width * height * sizeof( struct pixel ) )
+  };
+  return new_img.data ? new_img : BLANK_IMAGE;
+}
+
 static struct image rotate( struct image source, enum direction90 dir ) {
-  struct image new_img = { .height = source.width, .width = source.height, .data = malloc( sizeof( struct pixel ) * source.height * source.width ) };
+  struct image new_img = create_new_image( source.width, source.height );
   for ( size_t i = 0; i < source.height; i++ ) {
     for ( size_t j = 0; j < source.width; j++ ) {
       size_t addr = dir ? (j + 1) * new_img.width - 1 - i : (new_img.height - 1 - j) * new_img.width + i;

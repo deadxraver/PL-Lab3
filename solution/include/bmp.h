@@ -4,6 +4,7 @@
 #define BMP_BITS      24
 
 #include "image.h"
+#include "transform.h"
 #include <stdint.h>
 #include <stdio.h>
 

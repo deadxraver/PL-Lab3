@@ -4,6 +4,8 @@
 #include "image.h"
 #include <stdlib.h>
 
+#define BLANK_IMAGE ( struct image ) { 0, 0, 0 }
+
 enum direction90 {
   RIGHT = 0,
   LEFT
@@ -13,6 +15,8 @@ enum direction {
   HORIZONTAL = 0,
   VERTICAL
 };
+
+struct image create_new_image( uint64_t height, uint64_t width );
 
 struct image none( struct image source );
 
