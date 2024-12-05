@@ -14,8 +14,8 @@ static enum read_status read_pixels( FILE* in, struct image* img, struct bmp_hea
     return READ_MALLOC_ERROR;
   }
   fseek( in, header->bOffBits, SEEK_SET );
-  for ( size_t i = 0; i < img->height; i++ ) {
-    for ( size_t j = 0; j < img->width; j++ ) {
+  for ( size_t i = 0; i < img->height; ++i ) {
+    for ( size_t j = 0; j < img->width; ++j ) {
       fread( &img->data[i * img->width + j], sizeof( struct pixel ), 1, in );
     }
     fseek( in, padding, SEEK_CUR );
@@ -67,14 +67,14 @@ enum write_status to_bmp( FILE* out, struct image const* img ) {
   }
 
   struct pixel garbage_pixel = { 0 };
-  for ( size_t i = 0; i < img->height; i++ ) {
-    for ( size_t j = 0; j < img->width; j++ ) {
+  for ( size_t i = 0; i < img->height; ++i ) {
+    for ( size_t j = 0; j < img->width; ++j ) {
       if ( fwrite( img->data + i * img->width + j, sizeof( struct pixel ), 1, out ) != 1 ) {
         fprintf( stderr, "failed to write\n" );
         return WRITE_ERROR;
       }
     }
-    for ( uint32_t n = 0; n < padding; n++ ) {
+    for ( uint32_t n = 0; n < padding; ++n ) {
         if ( fwrite( &garbage_pixel, 1, 1, out ) != 1 ) {
         fprintf( stderr, "failed to write\n" );
         return WRITE_ERROR;
