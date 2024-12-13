@@ -34,6 +34,7 @@ enum read_status  {
   READ_FILE_NOT_EXISTS,
   READ_INVALID_BITS,
   READ_INVALID_HEADER,
+  READ_EOF,
   READ_MALLOC_ERROR = 12
   /* коды других ошибок  */
 };

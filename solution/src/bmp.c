@@ -15,9 +15,9 @@ static enum read_status read_pixels( FILE* in, struct image* img, struct bmp_hea
   fseek( in, header->bOffBits, SEEK_SET );
   for ( size_t i = 0; i < img->height; ++i ) {
     for ( size_t j = 0; j < img->width; ++j ) {
-      fread( &img->data[i * img->width + j], sizeof( struct pixel ), 1, in );
+      if( fread( &img->data[i * img->width + j], sizeof( struct pixel ), 1, in ) != 1 ) return READ_EOF;
     }
-    fseek( in, padding, SEEK_CUR );
+    if ( fseek( in, padding, SEEK_CUR ) ) return READ_EOF;
   }
   return READ_OK;
 }
